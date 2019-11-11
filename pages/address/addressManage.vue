@@ -1,12 +1,12 @@
 <template>
 	<view class="content">
 		<view class="row b-b">
-			<text class="tit">联系人</text>
-			<input class="input" type="text" v-model="addressData.name" placeholder="收货人姓名" placeholder-class="placeholder" />
+			<text class="tit">您的姓名</text>
+			<input class="input" type="text" v-model="addressData.name" placeholder="请输入姓名" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">手机号</text>
-			<input class="input" type="number" v-model="addressData.mobile" placeholder="收货人手机号码" placeholder-class="placeholder" />
+			<input class="input" type="number" v-model="addressData.mobile" placeholder="请输入手机号码(必填)" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">地址</text>
@@ -15,13 +15,21 @@
 			</text>
 			<text class="yticon icon-shouhuodizhi"></text>
 		</view>
-		<view class="row b-b"> 
+		<view class="row b-b">
 			<text class="tit">门牌号</text>
-			<input class="input" type="text" v-model="addressData.area" placeholder="楼号、门牌" placeholder-class="placeholder" />
+			<input class="input" type="text" v-model="addressData.area" placeholder="楼号、门牌(可不填)" placeholder-class="placeholder" />
+		</view>
+		<view class="row b-b">
+			<text class="tit">大概租金</text>
+			<input class="input" type="text" v-model="addressData.area" placeholder="单位:元/月" placeholder-class="placeholder" />
+		</view>
+		<view class="row b-b">
+			<text class="tit">大概面积</text>
+			<input class="input" type="text" v-model="addressData.area" placeholder="单位:平方米" placeholder-class="placeholder" />
 		</view>
 		
 		<view class="row default-row">
-			<text class="tit">设为默认</text>
+			<text class="tit">有房通知</text>
 			<switch :checked="addressData.defaule" color="#fa436a" @change="switchChange" />
 		</view>
 		<button class="add-btn" @click="confirm">提交</button>
@@ -43,11 +51,9 @@
 			}
 		},
 		onLoad(option){
-			let title = '新增收货地址';
-			if(option.type==='edit'){
-				title = '编辑收货地址'
-				
-				this.addressData = JSON.parse(option.data)
+			let title = '我要买房,完善以下信息';
+			if(option.type==='rent'){
+				title = '我要租房,完善以下信息'
 			}
 			this.manageType = option.type;
 			uni.setNavigationBarTitle({
@@ -116,7 +122,7 @@
 		
 		.tit{
 			flex-shrink: 0;
-			width: 120upx;
+			width: 160upx;
 			font-size: 30upx;
 			color: $font-color-dark;
 		}

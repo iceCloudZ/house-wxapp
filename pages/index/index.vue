@@ -21,13 +21,13 @@
 		</view>
 		<!-- 分类 -->
 		<view class="cate-section">
-			<view class="cate-item">
+			<view class="cate-item" @click="navToRequirement('rent')">
 				<image src="/static/temp/fangzu.png"></image>
-				<text>二手房</text>
+				<text>我要租房</text>
 			</view>
-			<view class="cate-item">
+			<view class="cate-item" @click="navToRequirement('buy')">
 				<image src="/static/temp/baofang.png"></image>
-				<text>租房</text>
+				<text>我要买房</text>
 			</view>
 			<view class="cate-item">
 				<image src="/static/temp/tianxie.png"></image>
@@ -62,8 +62,9 @@
 			</block>
 		</view>
 		<view class="cell">
-			<view class="cell-button" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">
-				<text>登陆</text>
+			<view class="cell-button" >
+				<!-- <text>登陆</text> -->
+				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">登陆</button>
 			</view>
 		</view>
 <!-- 		<view class="cell">
@@ -117,7 +118,6 @@
 				})
 
 			},
-
 			getPhoneNumber(e) {
 				console.log(e.detail.iv)
 				console.log(e.detail.encryptedData)
@@ -136,6 +136,12 @@
 				
 			},
 
+			// 跳转到用户需求页
+			navToRequirement(type) {
+				uni.navigateTo({
+					url: `/pages/address/addressManage?type=${type}`
+				})
+			},
 
 			/**
 			 * 请求静态数据只是为了代码不那么乱
