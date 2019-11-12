@@ -3,6 +3,11 @@
 		<!-- 小程序头部兼容 -->
 		<!-- #ifdef MP -->
 		<view class="mp-search-box">
+			<view class="search-select">
+				<xfl-select :list="list" :clearable="false" :showItemNum="5" :listShow="true" :isCanInput="false" :style_Container="'height: 28px; font-size: 14px;'"
+				 :placeholder="'placeholder'" :initValue="'二手'" :selectHideType="'hideAll'">
+				</xfl-select>
+			</view>
 			<input class="ser-input" type="text" value="输入关键字搜索" disabled />
 		</view>
 		<!-- #endif -->
@@ -62,12 +67,12 @@
 			</block>
 		</view>
 		<view class="cell">
-			<view class="cell-button" >
+			<view class="cell-button">
 				<!-- <text>登陆</text> -->
 				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">登陆</button>
 			</view>
 		</view>
-<!-- 		<view class="cell">
+		<!-- 		<view class="cell">
 			<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber"></button>
 		</view> -->
 
@@ -75,8 +80,11 @@
 </template>
 
 <script>
+	import xflSelect from '../../components/xfl-select/xfl-select.vue';
 	export default {
-
+		components: {
+			xflSelect
+		},
 		data() {
 			return {
 				titleNViewBackground: '',
@@ -85,6 +93,7 @@
 				carouselList: [],
 				goodsList: [],
 				cartList: [],
+				list: ['租房', '二手', '新房']
 			};
 		},
 
@@ -106,8 +115,8 @@
 								success(e) {
 									console.log(e.data);
 									wx.setStorage({
-										  key:"sessionKey",
-										  data:e.data.sessionKey
+										key: "sessionKey",
+										data: e.data.sessionKey
 									});
 								}
 							})
@@ -121,7 +130,7 @@
 			getPhoneNumber(e) {
 				console.log(e.detail.iv)
 				console.log(e.detail.encryptedData)
-				
+
 				wx.request({
 					url: 'https://api.icecloudz.cn/huser/wx/user/phone',
 					data: {
@@ -133,7 +142,7 @@
 						console.log(data);
 					}
 				})
-				
+
 			},
 
 			// 跳转到用户需求页
@@ -217,6 +226,7 @@
 <style lang="scss">
 	/* #ifdef MP */
 	.mp-search-box {
+		display:flex;
 		position: absolute;
 		left: 0;
 		top: 30upx;
@@ -224,15 +234,25 @@
 		width: 100%;
 		padding: 0 80upx;
 
-		.ser-input {
+		.search-select {
+			display: flex;
+			flex-direction: column;
 			flex: 1;
+			flex-grow: 1;
+		}
+
+		.ser-input {
+			display: flex;
+			flex-direction: column;
+			flex: 2;
+			flex-grow: 4;
 			height: 56upx;
-			line-height: 56upx;
+			border: 1px solid #c0c4cc;
 			text-align: center;
 			font-size: 28upx;
 			color: $font-color-base;
-			border-radius: 20px;
-			background: rgba(255, 255, 255, .6);
+			border-radius: 4px;
+			background: rgba(255, 255, 255, 1);
 		}
 	}
 
