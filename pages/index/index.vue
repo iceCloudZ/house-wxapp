@@ -72,9 +72,9 @@
 				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">登陆</button>
 			</view>
 		</view>
-		<!-- 		<view class="cell">
+		<view class="cell">
 			<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber"></button>
-		</view> -->
+		</view>
 
 	</view>
 </template>
