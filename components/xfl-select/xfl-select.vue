@@ -29,7 +29,7 @@
 		<div class="list-container" 
 		@click.stop="onListClick"
 		:style="'top:' + listTop__ + 'px;'" v-show="isShowList">
-			<span class="popper__arrow"></span> <!-- 列表框左上角的空心小三角 -->
+			<!-- <span class="popper__arrow"></span> --> <!-- 列表框左上角的空心小三角 -->
 			<scroll-view 
 				class="list" style="background-color: #fff;"  
 				:style="'max-height: ' + listBoxHeight__ +'em;'"

@@ -4,7 +4,7 @@
 		<!-- #ifdef MP -->
 		<view class="mp-search-box">
 			<view class="search-select">
-				<xfl-select :list="list" :clearable="false" :showItemNum="5" :listShow="true" :isCanInput="false" :style_Container="'height: 28px; font-size: 14px;'"
+				<xfl-select :list="list" :clearable="false" :showItemNum="5" :listShow="false" :isCanInput="false" :style_Container="'height: 28px; font-size: 14px;'"
 				 :placeholder="'placeholder'" :initValue="'二手'" :selectHideType="'hideAll'">
 				</xfl-select>
 			</view>
