@@ -91,7 +91,6 @@
 				swiperCurrent: 0,
 				swiperLength: 0,
 				carouselList: [],
-				goodsList: [],
 				cartList: [],
 				list: ['租房', '二手', '新房']
 			};
@@ -108,7 +107,7 @@
 					success(res) {
 						if (res.code) { //发起网络请求 
 							wx.request({
-								url: 'https://api.icecloudz.cn/huser/wx/user/login',
+								url: 'https://api.icecloudz.cn/wx/user/login',
 								data: {
 									code: res.code
 								},
@@ -132,7 +131,7 @@
 				console.log(e.detail.encryptedData)
 
 				wx.request({
-					url: 'https://api.icecloudz.cn/huser/wx/user/phone',
+					url: 'https://api.icecloudz.cn/wx/user/phone',
 					data: {
 						sessionKey: wx.getStorageSync('sessionKey'),
 						iv: e.detail.iv,
@@ -164,20 +163,32 @@
 			 * 分次请求未作整合
 			 */
 			async loadData() {
+				// 背景图片
 				let carouselList = await this.$api.json('carouselList');
 				this.titleNViewBackground = carouselList[0].background;
 				this.swiperLength = carouselList.length;
 				this.carouselList = carouselList;
 
-				let goodsList = await this.$api.json('goodsList');
-				this.goodsList = goodsList || [];
 
-				let list = await this.$api.json('cartList');
-				let cartList = list.map(item => {
-					item.checked = true;
-					return item;
-				});
-				this.cartList = cartList;
+				uni.request({
+					url: 'https://api.icecloudz.cn/houses', 
+					data: {
+						page: 0,
+						size: 8
+					},
+					success: (res) => {
+						console.log(res);
+						this.text = 'request success';
+					}
+				})
+
+				// 房源列表
+				// let list = await this.$api.json('cartList');
+				// let cartList = list.map(item => {
+				// 	item.checked = true;
+				// 	return item;
+				// });
+				// this.cartList = cartList;
 			},
 			//轮播图切换修改背景色
 			swiperChange(e) {
@@ -209,7 +220,7 @@
 <style lang="scss">
 	/* #ifdef MP */
 	.mp-search-box {
-		display:flex;
+		display: flex;
 		position: absolute;
 		left: 0;
 		top: 30upx;
