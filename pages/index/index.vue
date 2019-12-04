@@ -59,8 +59,8 @@
 							<text class="label" v-for="v in item.labels" :key='v'>{{v}}</text>
 						</view>
 						<view class="flexBox">
-							<text class="price">{{item.price}}万 </text>
-							<text class="attr">{{Math.floor(item.price *1000000 / item.area)}}元/平</text>
+							<text class="price">{{item.price /10000}}万 </text>
+							<text class="attr">{{Math.floor(item.price *100 / item.area)}}元/平</text>
 						</view>
 					</view>
 				</view>
@@ -171,14 +171,17 @@
 
 
 				uni.request({
-					url: 'https://api.icecloudz.cn/houses', 
+					url: 'https://api.icecloudz.cn/houses',
 					data: {
 						page: 0,
 						size: 8
 					},
 					success: (res) => {
-						console.log(res);
-						this.text = 'request success';
+						let cartList = res.data._embedded.houseList.map(item => {
+							item.labels = item.labels.split(",");
+							return item;
+						});
+						this.cartList = cartList;
 					}
 				})
 
