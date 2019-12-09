@@ -185,13 +185,6 @@
 					}
 				})
 
-				// 房源列表
-				// let list = await this.$api.json('cartList');
-				// let cartList = list.map(item => {
-				// 	item.checked = true;
-				// 	return item;
-				// });
-				// this.cartList = cartList;
 			},
 			//轮播图切换修改背景色
 			swiperChange(e) {
