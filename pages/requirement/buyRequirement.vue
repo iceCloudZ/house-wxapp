@@ -20,8 +20,8 @@
 			<input class="input" type="text" v-model="addressData.area" placeholder="楼号、门牌(可不填)" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
-			<text class="tit">大概租金</text>
-			<input class="input" type="text" v-model="addressData.area" placeholder="单位:元/月" placeholder-class="placeholder" />
+			<text class="tit">大概总价</text>
+			<input class="input" type="text" v-model="addressData.area" placeholder="单位:万元" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">大概面积</text>
@@ -52,9 +52,6 @@
 		},
 		onLoad(option){
 			let title = '我要买房,完善以下信息';
-			if(option.type==='rent'){
-				title = '我要租房,完善以下信息'
-			}
 			this.manageType = option.type;
 			uni.setNavigationBarTitle({
 				title

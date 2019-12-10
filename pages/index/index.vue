@@ -38,7 +38,7 @@
 				<image src="/static/temp/tianxie.png"></image>
 				<text>登记房源</text>
 			</view>
-			<view class="cate-item">
+			<view class="cate-item" @click="navToLogin()">
 				<image src="/static/temp/dianhualianxi.png"></image>
 				<text>联系我们</text>
 			</view>
@@ -73,7 +73,7 @@
 			</view>
 		</view>
 		<view class="cell">
-			<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber"></button>
+			<button type="primary">账号登录</button>
 		</view>
 
 	</view>
@@ -146,8 +146,20 @@
 
 			// 跳转到用户需求页
 			navToRequirement(type) {
+				if (type == 'buy') {
+					uni.navigateTo({
+						url: `/pages/requirement/buyRequirement`
+					})
+				} else {
+					uni.navigateTo({
+						url: `/pages/requirement/rentRequirement`
+					})
+				}
+			},
+
+			navToLogin() {
 				uni.navigateTo({
-					url: `/pages/address/addressManage?type=${type}`
+					url: `/pages/user/login`
 				})
 			},
 

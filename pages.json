@@ -67,7 +67,7 @@
 				"navigationBarTitleText": "购物车"
 			}
 		}, {
-			"path": "pages/public/login",
+			"path": "pages/user/login",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
@@ -134,14 +134,14 @@
 				"navigationBarTitleText": "创建订单"
 			}
 		}, {
-			"path": "pages/address/address",
+			"path": "pages/requirement/buyRequirement",
 			"style": {
-				"navigationBarTitleText": "收货地址"
+				"navigationBarTitleText": "买房需求"
 			}
 		}, {
-			"path": "pages/address/addressManage",
+			"path": "pages/requirement/rentRequirement",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "租房需求"
 			}
 		}, {
 			"path": "pages/money/pay",

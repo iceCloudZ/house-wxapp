@@ -76,7 +76,7 @@
 				<text>咨询经纪人</text>
 			</view>
 		</view>
-		
+
 		<!-- TODO 推荐房源 -->
 		<!-- TODO 房源地图 -->
 	</view>
@@ -169,19 +169,20 @@
 	/* 标题简介 */
 	.cell {
 		padding: 0 30upx;
-		
+
 		.cell-button {
 			display: flex;
-			align-items:center;
-			justify-content:center;
+			align-items: center;
+			justify-content: center;
 			margin: 10upx 0;
 			padding: 20upx 0;
 			background: rgba(220, 220, 220, 0.2);
+
 			text {
 				color: #4399FC;
 			}
 		}
-		
+
 		.cell-in-flex {
 			display: flex;
 			align-items: center;
