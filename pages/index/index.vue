@@ -66,15 +66,6 @@
 				</view>
 			</block>
 		</view>
-		<view class="cell">
-			<view class="cell-button">
-				<!-- <text>登陆</text> -->
-				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">登陆</button>
-			</view>
-		</view>
-		<view class="cell">
-			<button type="primary">账号登录</button>
-		</view>
 
 	</view>
 </template>
@@ -113,7 +104,7 @@
 								},
 								success(e) {
 									console.log(e.data);
-									wx.setStorage({
+									uni.setStorage({
 										key: "sessionKey",
 										data: e.data.sessionKey
 									});
@@ -124,28 +115,18 @@
 						}
 					}
 				})
-
-			},
-			getPhoneNumber(e) {
-				console.log(e.detail.iv)
-				console.log(e.detail.encryptedData)
-
-				wx.request({
-					url: 'https://api.icecloudz.cn/wx/user/phone',
-					data: {
-						sessionKey: wx.getStorageSync('sessionKey'),
-						iv: e.detail.iv,
-						encryptedData: e.detail.encryptedData
-					},
-					success(data) {
-						console.log(data);
-					}
-				})
-
 			},
 
 			// 跳转到用户需求页
 			navToRequirement(type) {
+				let userPhone = uni.getStorageSync('userPhone') || ""
+				if(userPhone == ""){
+					// 手机号空，跳转到登录页
+					
+				}
+				
+				
+				
 				if (type == 'buy') {
 					uni.navigateTo({
 						url: `/pages/requirement/buyRequirement`
