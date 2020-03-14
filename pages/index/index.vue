@@ -122,7 +122,9 @@
 				let userPhone = uni.getStorageSync('userPhone') || ""
 				if(userPhone == ""){
 					// 手机号空，跳转到登录页
-					
+					uni.navigateTo({
+						url: `/pages/user/login`
+					})
 				}
 				
 				
