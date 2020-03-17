@@ -108,6 +108,10 @@
 										key: "sessionKey",
 										data: e.data.sessionKey
 									});
+									uni.setStorage({
+									    key: 'profileId',
+									    data: e.data.id
+									});
 								}
 							})
 						} else {
@@ -119,25 +123,20 @@
 
 			// 跳转到用户需求页
 			navToRequirement(type) {
-				let userPhone = uni.getStorageSync('userPhone') || ""
-				if(userPhone == ""){
+				let profilePhone = uni.getStorageSync('profilePhone') || ""
+				let redirectUrl = type == 'buy' ? `/pages/requirement/buyRequirement` : `/pages/requirement/rentRequirement`
+				
+				if(profilePhone == ""){
 					// 手机号空，跳转到登录页
 					uni.navigateTo({
-						url: `/pages/user/login`
+						url: `/pages/user/login?redirectUrl=` + redirectUrl
 					})
 				}
-				
-				
-				
-				if (type == 'buy') {
-					uni.navigateTo({
-						url: `/pages/requirement/buyRequirement`
-					})
-				} else {
-					uni.navigateTo({
-						url: `/pages/requirement/rentRequirement`
-					})
-				}
+				// 跳转到用户需求页
+				uni.navigateTo({
+					url: redirectUrl
+				})
+
 			},
 
 			navToLogin() {
@@ -172,7 +171,7 @@
 						size: 8
 					},
 					success: (res) => {
-						let cartList = res.data._embedded.houseList.map(item => {
+						let cartList = res.data._embedded.houses.map(item => {
 							item.labels = item.labels.split(",");
 							return item;
 						});

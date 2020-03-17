@@ -2,35 +2,35 @@
 	<view class="content">
 		<view class="row b-b">
 			<text class="tit">您的姓名</text>
-			<input class="input" type="text" v-model="addressData.name" placeholder="请输入姓名" placeholder-class="placeholder" />
+			<input class="input" type="text" v-model="profileRequirement.profileName" placeholder="请输入姓名" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">手机号</text>
-			<input class="input" type="number" v-model="addressData.mobile" placeholder="请输入手机号码(必填)" placeholder-class="placeholder" />
+			<input class="input" type="number" v-model="profileRequirement.profilePhone" placeholder="请输入手机号码(必填)" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">地址</text>
 			<text @click="chooseLocation" class="input">
-				{{addressData.addressName}}
+				{{profileRequirement.addressName}}
 			</text>
 			<text class="yticon icon-shouhuodizhi"></text>
 		</view>
 		<view class="row b-b">
 			<text class="tit">门牌号</text>
-			<input class="input" type="text" v-model="addressData.area" placeholder="楼号、门牌(可不填)" placeholder-class="placeholder" />
+			<input class="input" type="text" v-model="profileRequirement.addressReal" placeholder="楼号、门牌(可不填)" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">大概总价</text>
-			<input class="input" type="text" v-model="addressData.area" placeholder="单位:万元" placeholder-class="placeholder" />
+			<input class="input" type="text" v-model="profileRequirement.price" placeholder="单位:万元" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">大概面积</text>
-			<input class="input" type="text" v-model="addressData.area" placeholder="单位:平方米" placeholder-class="placeholder" />
+			<input class="input" type="text" v-model="profileRequirement.area" placeholder="单位:平方米" placeholder-class="placeholder" />
 		</view>
 		
 		<view class="row default-row">
 			<text class="tit">有房通知</text>
-			<switch :checked="addressData.defaule" color="#fa436a" @change="switchChange" />
+			<switch :checked="profileRequirement.notify" color="#fa436a" @change="switchChange" />
 		</view>
 		<button class="add-btn" @click="confirm">提交</button>
 	</view>
@@ -40,13 +40,17 @@
 	export default {
 		data() {
 			return {
-				addressData: {
-					name: '',
-					mobile: '',
+				profileRequirement: {					
 					addressName: '在地图选择',
-					address: '',
-					area: '',
-					default: false
+					addressReal: '',
+					area: 0,
+					commentAddress: '',
+					notify: true,
+					price: 0,
+					profileId: 0,
+					profileName: '',
+					profilePhone: '',
+					requirementType: 'BUY'
 				}
 			}
 		},
@@ -56,10 +60,14 @@
 			uni.setNavigationBarTitle({
 				title
 			})
+			
+			// 获取用户id 与 手机号
+			this.profileRequirement.profileId = uni.getStorageSync('profileId');
+			this.profileRequirement.profilePhone = uni.getStorageSync('profilePhone');
 		},
 		methods: {
 			switchChange(e){
-				this.addressData.default = e.detail;
+				this.profileRequirement.default = e.detail;
 			},
 			
 			//地图选择地址
@@ -67,38 +75,46 @@
 				uni.chooseLocation({
 					success: (data)=> {
 						console.log(data)
-						this.addressData.addressName = data.name;
-						this.addressData.address = data.name;
+						this.profileRequirement.addressName = data.name;
+						this.profileRequirement.addressReal = data.address;
 					}
 				})
 			},
 			
 			//提交
 			confirm(){
-				let data = this.addressData;
-				if(!data.name){
+				wx.requestSubscribeMessage({
+				  tmplIds: ['44NNQHSAGal4JNtolVAPtYnjjh0Mzi3YjPuXs5JPDQo'],
+				  success (response) { 
+					  console.log(response);
+				  }
+				})
+				
+				let data = this.profileRequirement;
+				if(!data.profileName){
 					this.$api.msg('请填写您的姓名');
 					return;
 				}
-				if(!/(^1[3|4|5|7|8][0-9]{9}$)/.test(data.mobile)){
+				if(!/(^1[3|4|5|7|8][0-9]{9}$)/.test(data.profilePhone)){
 					this.$api.msg('请输入正确的手机号码');
 					return;
 				}
-				if(!data.address){
+				if(!data.addressReal){
 					this.$api.msg('请在地图选择所在位置');
 					return;
 				}
-				if(!data.area){
-					this.$api.msg('请填写门牌号信息');
-					return;
-				}
 				
-				//this.$api.prePage()获取上一页实例，可直接调用上页所有数据和方法，在App.vue定义
-				this.$api.prePage().refreshList(data, this.manageType);
-				this.$api.msg(`地址${this.manageType=='edit' ? '修改': '添加'}成功`);
-				setTimeout(()=>{
-					uni.navigateBack()
-				}, 800)
+				// 新增用户需求
+				uni.request({
+					url: 'https://api.icecloudz.cn/profileRequirements',
+					method: 'POST',
+					data: this.profileRequirement,
+					success: (res) => {
+
+					}
+				})
+				
+
 			},
 		}
 	}

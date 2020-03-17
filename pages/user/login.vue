@@ -17,39 +17,16 @@
 	export default {
 		components: {},
 		data() {
-			return {};
+			return {
+				redirectUrl : ''
+			};
 		},
-		onLoad() {
-
+		onLoad(option) {
+			this.redirectUrl = option.redirectUrl
 		},
 		methods: {
-			login() {
-				wx.login({
-					success(res) {
-						if (res.code) { //发起网络请求 
-							wx.request({
-								url: 'https://api.icecloudz.cn/wx/user/login',
-								data: {
-									code: res.code
-								},
-								success(e) {
-									console.log(e.data);
-									wx.setStorage({
-										key: "sessionKey",
-										data: e.data.sessionKey
-									});
-								}
-							})
-						} else {
-							console.log('登录失败！' + res.errMsg)
-						}
-					}
-				})
-			},
-
-
 			getPhoneNumber(e) {
-
+				let This = this;
 				wx.request({
 					url: 'https://api.icecloudz.cn/wx/user/phone',
 					data: {
@@ -58,12 +35,13 @@
 						encryptedData: e.detail.encryptedData
 					},
 					success(res) {
-						wx.setStorageSync('userPhone',res.data.phoneNumber)
-						console.log(uni.getStorageSync('userPhone'))
+						wx.setStorageSync('profilePhone', res.data.phoneNumber)
+						uni.navigateTo({
+							url: This.redirectUrl
+						})
 					}
 				})
-
-			},
+			}
 		}
 	}
 </script>
