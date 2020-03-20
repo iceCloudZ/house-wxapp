@@ -148,7 +148,7 @@
 			// 跳转到查询页
 			navToSearch() {
 				uni.navigateTo({
-					url: `/pages/product/list`
+					url: `/pages/HM-search/HM-search`
 				})
 			},
 
